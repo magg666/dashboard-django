@@ -22,7 +22,7 @@ class RepositoryForm(ModelForm):
         model = Repository
         fields = ['url', 'plan', 'module']
 
-    def clean_url(self):
+    def clean_url(self) -> dict:
         """ Method to validate link to GitHub repository. It checks domain and necessary content
         :raise
             Validation Error
