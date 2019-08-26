@@ -12,7 +12,27 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from dotenv import load_dotenv
+from celery.schedules import crontab
+
 load_dotenv()
+
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND = f'db+postgresql+psycopg2://{os.environ.get("USER")}:{os.environ.get("PASSWORD")}@{os.environ.get("HOST")}/{os.environ.get("DB_NAME")}'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Warsaw'
+
+CELERY_BEAT_SCHEDULE = {
+    'task-number-one': {
+        'task': 'codecool_github_api.tasks.save_github_weekly_statistic',
+        'schedule': crontab(day_of_week='mon-fri', hour='8-15', minute='*/5'),
+    },
+    'task-number-two': {
+        'task': 'codecool_github_api.tasks.save_github_total_statistic',
+        'schedule': crontab(day_of_week='fri', hour='9-15/1', minute=0)
+    }
+}
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +41,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'gyzy6zjclf^4=c!)ty*1$1x*bj(t99x9-6#7jni0ys-n4bq-)n'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'codecool_github_api.apps.CodecoolGithubApiConfig',
     'rest_framework',
 ]
 
@@ -56,7 +77,7 @@ ROOT_URLCONF = 'dashboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
