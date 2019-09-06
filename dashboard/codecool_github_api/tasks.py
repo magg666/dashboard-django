@@ -1,10 +1,10 @@
 from datetime import date
+
+from celery import shared_task
 from .models import WeeklyStatistic, TotalStatistic
 from .utils import get_github_statistics
-from celery import shared_task
 
 
-# This task is set to execute from Monday to Friday, every 5 minutes
 @shared_task()
 def save_github_weekly_statistic() -> None:
     """
@@ -25,14 +25,14 @@ def save_github_weekly_statistic() -> None:
             deletions = data['weeks'][last_week_index]['d']
             commits = data['weeks'][last_week_index]['c']
 
-            WeeklyStatistic.objects.all().update_or_create(repository_id=repository_id,
-                                                           contributor=contributor,
-                                                           week=week,
-                                                           defaults={"commits": commits,
-                                                                     "additions": additions,
-                                                                     'deletions': deletions})
+            WeeklyStatistic.objects.update_or_create(repository_id=repository_id,
+                                                     contributor=contributor,
+                                                     week=week,
+                                                     defaults={"commits": commits,
+                                                               "additions": additions,
+                                                               'deletions': deletions})
 
-# This task is set to execute on Friday between 9-15 every hour
+
 @shared_task()
 def save_github_total_statistic() -> None:
     """
@@ -43,20 +43,17 @@ def save_github_total_statistic() -> None:
     repositories_data = get_github_statistics()
 
     for repository in repositories_data:
-        repository_id = repository['repository_id']
         commits = sum(data['total'] for data in repository)
         additions = 0
         deletions = 0
 
         for data in repository:
+            repository_id = data['repository_id']
             weeks = data['weeks']
             additions += sum(item['a'] for item in weeks)
             deletions += sum(item['d'] for item in weeks)
 
-            TotalStatistic.objects.all().update_or_create(repository_id=repository_id,
-                                                          defaults={'commits': commits,
-                                                                    'additions': additions,
-                                                                    'deletions': deletions})
-
-
-
+            TotalStatistic.objects.update_or_create(repository_id=repository_id,
+                                                    defaults={'commits': commits,
+                                                              'additions': additions,
+                                                              'deletions': deletions})
