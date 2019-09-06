@@ -1,4 +1,5 @@
 from django.forms import ModelForm, ValidationError
+
 from .models import Repository
 
 
@@ -21,6 +22,11 @@ class RepositoryForm(ModelForm):
 
         model = Repository
         fields = ['url', 'plan', 'module']
+        labels = {
+            "url": "Link to Github repository",
+            "plan": "Link to your plan",
+            "module": "Choose module"
+        }
 
     def clean_url(self) -> dict:
         """ Method to validate link to GitHub repository. It checks domain and necessary content
@@ -29,7 +35,7 @@ class RepositoryForm(ModelForm):
         :return:
             data: dict - processed and validated data from form
         """
-        # link to repository is splitted to list:
+        # link to repository is splited to list:
         #   first split by '//' = [https, github.com/OWNER/PROJECT_NAME]
         #   second split by '/' = [github.com, OWNER, PROJECT]
 
