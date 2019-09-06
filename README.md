@@ -17,8 +17,16 @@ Project gets projects' data from [Codecool](https://codecool.com/pl/) students a
 
 
 ## Screenshots
+Main page:
+
 ![Main page](./dashboard-b1.png)
+
+Form page:
+
 ![Form page](./dashboard-b2.png)
+
+JSON response:
+
 ![JSON response](./dashboard-b3.png)
 
 ## Technologies
