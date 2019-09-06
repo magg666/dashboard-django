@@ -1,0 +1,30 @@
+{% extends 'codecool_github_api/base.html' %}
+{% block title %}Add data {% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row mh-100vh">
+            <div class="col-10 col-sm-8 col-md-6 col-lg-6 offset-1 offset-sm-2 offset-md-3 offset-lg-0 align-self-center d-lg-flex align-items-lg-center align-self-lg-stretch bg-white p-5 rounded rounded-lg-0 my-5 my-lg-0"
+                 id="login-block">
+                <div class="m-auto w-lg-75 w-xl-50">
+                    <h2 class="text-info font-weight-light mb-5">{% load static %} <img alt="CodeCool" src="{% static 'codecool_github_api/images/apple-icon-60x60.png' %}"/> Add repository</h2>
+                    <form class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        {% include 'codecool_github_api/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-info mt-2">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-end" id="bg-block">
+                <p class="ml-auto small text-dark mb-2"><br/>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

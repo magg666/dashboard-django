@@ -1,0 +1,119 @@
+{% extends 'codecool_github_api/base.html' %}
+{% block content %}
+    <div class="container-list">
+        <div class="wrapper">
+            <div class="card-box">
+                <input type="checkbox" id="card1" class="more" aria-hidden="true">
+                <div class="content">
+                    <div class="front"
+                         style="background-image: url('https://techcrunch.com/wp-content/uploads/2010/07/github-logo.png?&auto=format&fit=crop&w=1350&q=80')">
+                        <div class="inner">
+                            <h2>Repository</h2>
+                            <label for="card1" class="button" aria-hidden="true">
+                                Details
+                            </label>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="inner">
+                            <div class="description">
+                                <p>Create repository on Github</p>
+                                <p>Add members of your team as collaborators and do not set repository private!</p>
+                                <p>Copy link to your repository - it should look like this:</p>
+                                <p>https://github.com/YOUR GITHUB LOGIN/YOUR PROJECT TITLE</p>
+                            </div>
+                            <label for="card1" class="button return" aria-hidden="true">
+                                <i class="fas fa-arrow-left"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <input type="checkbox" id="card2" class="more">
+                <div class="content">
+                    <div class="front"
+                         style="background-image: url('http://www.sclance.com/pngs/plan-png/plan_png_1038833.jpg?&auto=format&fit=crop&w=1350&q=80')">
+                        <div class="inner">
+                            <h2>Plan</h2>
+                            <label for="card2" class="button" aria-hidden="true">
+                                Details
+                            </label>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="inner">
+                            <div class="description">
+                                <p>Create plan.</p>
+                                <p>Use Trello, Google Spreadsheet or other online tool.</p>
+                                <p>Don't forget to estimate your tasks and to split work between all team members!</p>
+
+                            </div>
+                            <label for="card2" class="button return" aria-hidden="true">
+                                <i class="fas fa-arrow-left"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <input type="checkbox" id="card3" class="more">
+                <div class="content">
+                    <div class="front"
+                         style="background-image: url('http://www.sclance.com/pngs/team-work-png/team_work_png_1357212.jpg?&auto=format&fit=crop&w=658&q=80')">
+                        <div class="inner">
+                            <h2>Teamwork</h2>
+                            <label for="card3" class="button" aria-hidden="true">
+                                Details
+                            </label>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="inner">
+                            <div class="description">
+                                <p>Work and have fun!</p>
+                                <p>Commit your work to repository into main branch (master by default).</p>
+                                <p>This branch will be included in our Codecool statistics!</p>
+                            </div>
+                            <label for="card3" class="button return" aria-hidden="true">
+                                <i class="fas fa-arrow-left"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'add_repository' %}" class="button"
+           style="color: black; border: black 1px solid; text-decoration: none">Add your project data!</a>
+        <div class="wrapper">
+            <div class="card-list">
+                {#                <div class="content">#}
+                <div class="card-title" style="text-align: center; padding: 10px; font-size: 30px">ACTIVE PROJECTS
+                </div>
+                {% if current_repositories %}
+                    {% for repository in current_repositories %}
+                        <hr style="border-top: black 1px dashed; height: 1px; background-color:#fff; width:100%;"/>
+                        <div class="row" style="padding: 10px">
+                            <div class="col-sm">{{ repository.project | capfirst }}</div>
+                            <div class="col-sm"><a class="button" href="{{ repository.plan }} " target="_blank">Plan</a>
+                            </div>
+                            <div class="col-sm"><a class="button" href="{{ repository.url }}"
+                                                   target="_blank">Repository</a></div>
+
+                        </div>
+
+                    {% endfor %}
+                {% else %}
+                    <div class="card-title" style="text-align: center; padding: 10px; font-size: 30px">There are no
+                        active projects yet
+                    </div>
+                {% endif %}
+
+                {#                </div>#}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
