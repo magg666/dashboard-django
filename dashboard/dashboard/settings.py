@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from dotenv import load_dotenv
+
 from celery.schedules import crontab
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -26,11 +27,11 @@ CELERY_TIMEZONE = 'Europe/Warsaw'
 CELERY_BEAT_SCHEDULE = {
     'task-number-one': {
         'task': 'codecool_github_api.tasks.save_github_weekly_statistic',
-        'schedule': crontab(day_of_week='mon-fri', hour='8-15', minute='*/5'),
+        'schedule': crontab(),
     },
     'task-number-two': {
         'task': 'codecool_github_api.tasks.save_github_total_statistic',
-        'schedule': crontab(day_of_week='fri', hour='9-15/1', minute=0)
+        'schedule': crontab()
     }
 }
 
@@ -70,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'dashboard.urls'
@@ -93,6 +95,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dashboard.wsgi.application'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000"
+]
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
