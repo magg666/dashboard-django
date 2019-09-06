@@ -126,3 +126,6 @@ dmypy.json
 .pyre/
 
 .idea
+
+dashboard/celerybeat.pid
+
