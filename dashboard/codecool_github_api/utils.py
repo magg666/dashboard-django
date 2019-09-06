@@ -1,6 +1,6 @@
-from .models import Repository
 import os
 import requests
+from .models import Repository
 
 
 def get_github_statistics() -> str or list:
