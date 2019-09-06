@@ -1,8 +1,29 @@
+from datetime import date
+from dateutil.relativedelta import relativedelta, MO
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from datetime import date
-from dateutil.relativedelta import relativedelta, MO
+
+
+class Module(models.Model):
+    """
+    Students' learning stage
+    """
+    objects = models.Manager()
+
+    MODULES = [
+        ('PB', 'ProgBasic Module'),
+        ('WEB', 'Web & SQL'),
+        ('OOP', 'Object Orientated Programming Module'),
+        ('ADV', 'Advanced Module')]
+
+    module = models.CharField(max_length=5, choices=MODULES)
+
+    class Meta:
+        db_table = 'module'
+
+    def __str__(self):
+        return self.get_module_display()
 
 
 class RepositoryManager(models.Manager):
@@ -37,7 +58,7 @@ class Repository(models.Model):
         plan - link to plan for project
         owner - project owner login
         project - project name
-        module - current module of students. Four options to choose.
+        module - current module of students. Foreign key to Module.
 
     Methods:
         __str__
@@ -52,21 +73,13 @@ class Repository(models.Model):
             models.Index(fields=['date', 'url']),
         ]
 
-    # choices for modules
-    MODULES = [
-        ('PB', 'ProgBasic Module'),
-        ('WEB', 'Web & SQL'),
-        ('OOP', 'Object Orientated Programming Module'),
-        ('ADV', 'Advanced Module'),
-    ]
-
     # fields
     date = models.DateField(auto_now=True)
     url = models.URLField()
     plan = models.URLField()
     owner = models.CharField(max_length=100, name="owner")
     project = models.CharField(max_length=100, name='project')
-    module = models.CharField(max_length=5, choices=MODULES)
+    module = models.ForeignKey(Module, related_name='projects', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         """
@@ -86,7 +99,6 @@ PROJECT_INDEX = 2
 
 @receiver(post_save, sender=Repository)
 def repository_owner(instance, created, **kwargs):
-
     if created:
         owner = str(instance.url).split("//")[NO_SCHEME_INDEX].split("/")[OWNER_INDEX]
         Repository.objects.filter(pk=instance.pk).update(owner=owner)
@@ -94,7 +106,6 @@ def repository_owner(instance, created, **kwargs):
 
 @receiver(post_save, sender=Repository)
 def repository_project(instance, created, **kwargs):
-
     if created:
         project = str(instance.url).split("//")[NO_SCHEME_INDEX].split("/")[PROJECT_INDEX]
         Repository.objects.filter(pk=instance.pk).update(project=project)
@@ -121,7 +132,7 @@ class WeeklyStatistic(models.Model):
         db_table = 'weekly_statistic'
 
     # fields
-    repository = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    repository = models.ForeignKey(Repository, related_name='users', on_delete=models.CASCADE)
     week = models.DateField()
     contributor = models.CharField(max_length=100)
     commits = models.IntegerField()
@@ -144,7 +155,6 @@ class TotalStatistic(models.Model):
     Keeps data about total statistic for project
     Fields:
         repository - ForeignKey Repository;
-        week - date from timestamp;
         commits - amount of commits for project;
         additions - amount of additions for project;
         deletions - amount of deletions for project;
@@ -158,7 +168,7 @@ class TotalStatistic(models.Model):
         db_table = 'statistic'
 
     # fields
-    repository = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    repository = models.ForeignKey(Repository, related_name='total', on_delete=models.CASCADE)
     commits = models.IntegerField()
     additions = models.IntegerField()
     deletions = models.IntegerField()
