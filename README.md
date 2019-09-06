@@ -17,9 +17,9 @@ Project gets projects' data from [Codecool](https://codecool.com/pl/) students a
 
 
 ## Screenshots
-![Main page](./img/screenshot.png)
-![Form page](./img/screenshot.png)
-![JSON response](./img/screenshot.png)
+![Main page](./dashboard-b1.png)
+![Form page](./dashboard-b2.png)
+![JSON response](./dashboard-b3.png)
 
 ## Technologies
 * Django - version 2.2.5
