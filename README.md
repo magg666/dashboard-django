@@ -109,6 +109,7 @@ Project is finished, but I do not exclude the possibility of further development
 
 ## Inspiration
 Credits for:
+
 [Maciej Jankowski](https://github.com/maciejjankowski) - Codecool mentor - for idea and help. Thank you.
 
 All Codecool mentors and student.
