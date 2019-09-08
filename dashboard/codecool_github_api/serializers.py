@@ -9,14 +9,14 @@ class CurrentWeekSerializer(serializers.ListSerializer):
 
     def to_representation(self, data):
         today = date.today()
-        last_monday = today + relativedelta(weekday=SU(-1))
-        data = data.filter(week__range=[last_monday, today])
+        last_sunday = today + relativedelta(weekday=SU(-1))
+        data = data.filter(week__range=[last_sunday, today])
+        data = data.exclude(commits=0)
         return super().to_representation(data)
 
 
 # serializers for weekly GitHub statistics
 class WeekDataSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = WeeklyStatistic
         fields = ['contributor', 'commits']
