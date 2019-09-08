@@ -15,6 +15,12 @@ class CurrentWeekSerializer(serializers.ListSerializer):
         return super().to_representation(data)
 
 
+class ExistWeekStatsSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        data = data.exclude(users__isnull=True)
+        return super().to_representation(data)
+
+
 # serializers for weekly GitHub statistics
 class WeekDataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,6 +36,7 @@ class WeekProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Repository
         fields = ['project', 'users']
+        list_serializer_class = ExistWeekStatsSerializer
 
     @staticmethod
     def get_project(obj):
@@ -51,6 +58,13 @@ class WeekSerializer(serializers.ModelSerializer):
 
 
 # serializers for overall statistics
+
+class ExistTotalSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        data = data.exclude(total__isnull=True)
+        return super().to_representation(data)
+
+
 class TotalDataSerializer(serializers.ModelSerializer):
     """
     Serialize overall statistics
@@ -68,6 +82,7 @@ class TotalProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Repository
         fields = ['project', 'total']
+        list_serializer_class = ExistTotalSerializer
 
     @staticmethod
     def get_project(obj):

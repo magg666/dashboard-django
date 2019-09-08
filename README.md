@@ -14,7 +14,11 @@ Second part (frontend) you can find [here](https://github.com/magg666/dashboard-
 
 ## General info
 Project gets projects' data from [Codecool](https://codecool.com/pl/) students and delivers statistics about repositories in JSON format.
-
+Codecool Dashboard:
+* Shows on main page instruction and list of projects
+* Displays form to add project's data
+* Gets and processes data for repository from github on weekly basis and as a whole
+* Serves processed data in JSON format
 
 ## Screenshots
 Main page:
@@ -98,11 +102,14 @@ class Migration(migrations.Migration):
 ```
 
 ## Features
-Codecool Dashbord project now:
-* Shows on main page instruction and list of projects
-* Displays form to add project's data
-* Gets and processes data for repository from github on weekly basis and as a whole
-* Serves processed data in JSON format
+Codecool Dashboard uses:
+* Class based views in Django
+* Django Rest Framework serializers
+* Custom written migrations for Django
+* Django ORM
+* External Apis
+* Cyclic tasks supervised by Celery and RabbitMq
+* Custom form validation
 
 ## Status
 Project is finished, but I do not exclude the possibility of further developments.
