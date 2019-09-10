@@ -17,7 +17,7 @@ class RepositoryView(ListView):
     context_object_name = "current_repositories"
 
     def get_queryset(self):
-        return Repository.current.all().distinct('url')
+        return Repository.current.all()
 
 
 class RepositoryCreate(View):
