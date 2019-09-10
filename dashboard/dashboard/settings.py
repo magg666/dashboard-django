@@ -97,7 +97,8 @@ WSGI_APPLICATION = 'dashboard.wsgi.application'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://localhost:5000",
 ]
 
 # Database
@@ -105,12 +106,14 @@ CORS_ORIGIN_WHITELIST = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("USER"),
-        'PASSWORD': os.environ.get("PASSWORD"),
-        'HOST': os.environ.get("HOST"),
-        'PORT': os.environ.get("PORT")
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'sqlite3.db',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ.get("DB_NAME"),
+        # 'USER': os.environ.get("USER"),
+        # 'PASSWORD': os.environ.get("PASSWORD"),
+        # 'HOST': os.environ.get("HOST"),
+        # 'PORT': os.environ.get("PORT")
     }
 }
 
