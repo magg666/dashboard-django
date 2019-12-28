@@ -1,10 +1,22 @@
 # Codecool Dashboard I
 > Backend part of project Codecool Dashboard.
 Project gets projects' data from [Codecool](https://codecool.com/pl/) students and delivers statistics about repositories in JSON format.
+
 Project was created to practice back-end skills:
 * Working with Django and REST framework using OOP based approach
 * Celery and RabbitMQ supports asynchronous task queue based on distributed message passing.
 * PostgreSQL as database source
+
+Codecool Dashboard uses:
+* Class based views in Django
+* Django Rest Framework serializers
+* Custom written migrations for Django
+* Django ORM
+* External Apis
+* Cyclic tasks supervised by Celery and RabbitMq
+* Custom form validation
+
+
 
 ## Table of contents
 * [General info](#general-info)
@@ -12,7 +24,6 @@ Project was created to practice back-end skills:
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Code Examples](#code-examples)
-* [Features](#features)
 * [Status](#status)
 * [Inspiration](#inspiration)
 * [Contact](#contact)
@@ -105,16 +116,6 @@ class Migration(migrations.Migration):
         migrations.RunPython(insert_modules)
     ]
 ```
-
-## Features
-Codecool Dashboard uses:
-* Class based views in Django
-* Django Rest Framework serializers
-* Custom written migrations for Django
-* Django ORM
-* External Apis
-* Cyclic tasks supervised by Celery and RabbitMq
-* Custom form validation
 
 ## Status
 Project is finished, but I do not exclude the possibility of further developments.
