@@ -1,6 +1,10 @@
 # Codecool Dashboard I
 > Backend part of project Codecool Dashboard.
-Second part (frontend) you can find [here](https://github.com/magg666/dashboard-api)
+Project gets projects' data from [Codecool](https://codecool.com/pl/) students and delivers statistics about repositories in JSON format.
+Project was created to practice back-end skills:
+* Working with Django and REST framework using OOP based approach
+* Celery and RabbitMQ supports asynchronous task queue based on distributed message passing.
+* PostgreSQL as database source
 
 ## Table of contents
 * [General info](#general-info)
@@ -13,12 +17,12 @@ Second part (frontend) you can find [here](https://github.com/magg666/dashboard-
 * [Contact](#contact)
 
 ## General info
-Project gets projects' data from [Codecool](https://codecool.com/pl/) students and delivers statistics about repositories in JSON format.
 Codecool Dashboard:
 * Shows on main page instruction and list of projects
 * Displays form to add project's data
 * Gets and processes data for repository from github on weekly basis and as a whole
 * Serves processed data in JSON format
+Second part (frontend) you can find [here](https://github.com/magg666/dashboard-react)
 
 ## Screenshots
 Main page:
